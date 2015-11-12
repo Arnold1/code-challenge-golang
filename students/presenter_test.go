@@ -33,11 +33,14 @@ func TestByCampusAndLastNameAsc(t *testing.T) {
 	s1 := NewStudent(data1)
 	s2 := NewStudent(data2)
 	s3 := NewStudent(data3)
-	sortedStudents := []*Student{s3, s2, s1}
-	p := NewPresenter([]*Student{s1, s2, s3})
+	sorted := []*Student{s3, s2, s1}
+	unsorted := []*Student{s1, s2, s3}
+
+	p := NewPresenter(unsorted)
 	students := p.ByCampusAndLastNameAsc()
-	if !reflect.DeepEqual(students, sortedStudents) {
-		t.Errorf("Expected '%v', got '%v'", sortedStudents, students)
+
+	if !reflect.DeepEqual(students, sorted) {
+		t.Errorf("Expected '%v', got '%v'", sorted, students)
 	}
 }
 
@@ -60,11 +63,14 @@ func TestByDateOfBirthAsc(t *testing.T) {
 	}
 	s1 := NewStudent(data1)
 	s2 := NewStudent(data2)
-	sortedStudents := []*Student{s1, s2}
-	p := NewPresenter([]*Student{s2, s1})
+	sorted := []*Student{s1, s2}
+	unsorted := []*Student{s2, s1}
+
+	p := NewPresenter(unsorted)
 	students := p.ByDateOfBirthAsc()
-	if !reflect.DeepEqual(students, sortedStudents) {
-		t.Errorf("Expected '%v', got '%v'", sortedStudents, students)
+
+	if !reflect.DeepEqual(students, sorted) {
+		t.Errorf("Expected '%v', got '%v'", sorted, students)
 	}
 }
 
@@ -87,10 +93,13 @@ func TestByLastNameDesc(t *testing.T) {
 	}
 	s1 := NewStudent(data1)
 	s2 := NewStudent(data2)
-	sortedStudents := []*Student{s2, s1}
-	p := NewPresenter([]*Student{s1, s2})
+	sorted := []*Student{s2, s1}
+	unsorted := []*Student{s1, s2}
+
+	p := NewPresenter(unsorted)
 	students := p.ByLastNameDesc()
-	if !reflect.DeepEqual(students, sortedStudents) {
-		t.Errorf("Expected '%v', got '%v'", sortedStudents, students)
+
+	if !reflect.DeepEqual(students, sorted) {
+		t.Errorf("Expected '%v', got '%v'", sorted, students)
 	}
 }

@@ -12,6 +12,7 @@ func TestNewStudent(t *testing.T) {
 		"dateOfBirth":   "1/1/2015",
 	}
 	s := NewStudent(data)
+
 	if s.FirstName() != "a" {
 		t.Errorf("Expected '%v', got '%v'", "a", s.FirstName())
 	}
@@ -42,6 +43,7 @@ func TestTrimsExtraSpaces(t *testing.T) {
 		"dateOfBirth":   " 1/1/2015 ",
 	}
 	s := NewStudent(data)
+
 	if s.FirstName() != "a" {
 		t.Errorf("Expected '%v', got '%v'", "a", s.FirstName())
 	}
@@ -65,6 +67,7 @@ func TestTrimsExtraSpaces(t *testing.T) {
 func TestBadCampuses(t *testing.T) {
 	s := new(Student)
 	s.SetCampus("LA")
+
 	if s.Campus() != "Los Angeles" {
 		t.Errorf("Expected '%v', got '%v'", "Los Angeles", s.Campus())
 	}
@@ -81,6 +84,7 @@ func TestBadCampuses(t *testing.T) {
 func TestBadDateOfBirth(t *testing.T) {
 	s := new(Student)
 	s.SetDateOfBirth("1-1-2015")
+
 	if s.DateOfBirth() != "1/1/2015" {
 		t.Errorf("Expected '%v', got '%v'", "1/1/2015", s.DateOfBirth())
 	}

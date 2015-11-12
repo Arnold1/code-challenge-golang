@@ -1,0 +1,5 @@
+Run:
+    'go run main.go'
+
+Run Tests:
+    'cd students; go test -cover'

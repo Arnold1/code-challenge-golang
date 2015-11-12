@@ -2,48 +2,39 @@ package students
 
 import (
 	"encoding/csv"
-	"os"
+	"io"
 )
 
 type Reader struct {
-	file      *os.File
-	delimiter rune
+	FileReader io.Reader
+	Delimiter  rune
 }
 
-func NewReader(fileName string, delimiter rune) (*Reader, error) {
-	f, err := os.Open(fileName)
-	if err != nil {
-		return nil, err
+func NewReader(fileReader io.Reader, delimiter rune) *Reader {
+	return &Reader{
+		FileReader: fileReader,
+		Delimiter:  delimiter,
 	}
-	defer f.Close()
-	r := &Reader{
-		file:      f,
-		delimiter: delimiter,
-	}
-	return r, nil
 }
 
-func (r *Reader) Read() ([]*Student, error) {
-	c := csv.NewReader(r.file)
-	c.Comma = r.delimiter
-	rows, err := c.ReadAll()
-	if err != nil {
-		return nil, err
-	}
+func (r *Reader) Read() []*Student {
+	c := csv.NewReader(r.FileReader)
+	c.Comma = r.Delimiter
+
+	rows, _ := c.ReadAll()
+
 	students := make([]*Student, len(rows))
-	for _, row := range rows {
-		var s *Student
-		switch r.delimiter {
+	for i, row := range rows {
+		switch r.Delimiter {
 		case ',':
-			s = newCommaStudent(row)
+			students[i] = newCommaStudent(row)
 		case '$':
-			s = newDollarStudent(row)
+			students[i] = newDollarStudent(row)
 		case '|':
-			s = newPipeStudent(row)
+			students[i] = newPipeStudent(row)
 		}
-		students = append(students, s)
 	}
-	return students, nil
+	return students
 }
 
 func newCommaStudent(row []string) *Student {
