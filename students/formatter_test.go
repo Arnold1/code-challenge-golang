@@ -2,6 +2,7 @@ package students
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -41,7 +42,10 @@ func TestFormat(t *testing.T) {
 	s1 := NewStudent(data1)
 	s2 := NewStudent(data2)
 	students := []*Student{s1, s2}
-	expected := "c a d 1/1/2015 e\nd e c 2/1/2015 a"
+	expected := strings.Join([]string{
+		"c a d 1/1/2015 e",
+		"d e c 2/1/2015 a",
+	}, "\n")
 
 	f := NewFormatter(students)
 	formatted := f.Format()
