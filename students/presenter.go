@@ -27,7 +27,6 @@ func (p *Presenter) ByCampusAndLastNameAsc() []*Student {
 	lastName := func(s1, s2 *Student) bool {
 		return s1.LastName() < s2.LastName()
 	}
-
 	sortBy(campus, lastName).Sort(p.students)
 	return p.students
 }
@@ -38,7 +37,6 @@ func (p *Presenter) ByDateOfBirthAsc() []*Student {
 		d2, _ := time.Parse(dateOfBirthFormat, s2.DateOfBirth())
 		return d1.Before(d2)
 	}
-
 	sortBy(dateOfBirth).Sort(p.students)
 	return p.students
 }
@@ -47,7 +45,6 @@ func (p *Presenter) ByLastNameDesc() []*Student {
 	lastName := func(s1, s2 *Student) bool {
 		return s1.LastName() > s2.LastName()
 	}
-
 	sortBy(lastName).Sort(p.students)
 	return p.students
 }

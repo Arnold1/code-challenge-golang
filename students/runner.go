@@ -7,8 +7,6 @@ import (
 	"unicode/utf8"
 )
 
-const ()
-
 type Runner struct {
 	out     io.Writer
 	options map[string]string
