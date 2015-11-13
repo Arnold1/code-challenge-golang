@@ -18,12 +18,11 @@ func NewReader(fileReader io.Reader, delimiter rune) *Reader {
 }
 
 func (r *Reader) Read() []*Student {
+	var students []*Student
+
 	c := csv.NewReader(r.FileReader)
 	c.Comma = r.Delimiter
-
 	rows, _ := c.ReadAll()
-
-	var students []*Student
 	for _, row := range rows {
 		switch r.Delimiter {
 		case ',':

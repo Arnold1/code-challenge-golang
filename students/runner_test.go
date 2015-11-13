@@ -7,6 +7,8 @@ import (
 )
 
 func TestRun(t *testing.T) {
+	var out bytes.Buffer
+
 	expected := strings.Join([]string{
 		"Output 1:",
 		"Kirlin Mckayla Atlanta 5/29/1986 Maroon",
@@ -42,7 +44,6 @@ func TestRun(t *testing.T) {
 		"Barrows Anika Hong Kong 5/5/1965 Spring Green",
 		"",
 	}, "\n")
-	var out bytes.Buffer
 	options := map[string]string{
 		"commaFile":       "../data/comma.txt",
 		"dollarFile":      "../data/dollar.txt",

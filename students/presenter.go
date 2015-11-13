@@ -66,10 +66,10 @@ func (p *Presenter) Swap(i, j int) {
 }
 
 func (p *Presenter) Less(i, j int) bool {
+	var k int
+
 	s1 := p.students[i]
 	s2 := p.students[j]
-
-	var k int
 	for k = 0; k < len(p.sorters)-1; k++ {
 		sorter := p.sorters[k]
 		switch {
