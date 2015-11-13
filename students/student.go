@@ -54,11 +54,11 @@ func (s *Student) SetCampus(campus string) {
 	c := strings.TrimSpace(campus)
 	switch {
 	case strings.Contains(c, "LA"):
-		c = strings.Replace(c, "LA", "Los Angeles", -1)
+		c = "Los Angeles"
 	case strings.Contains(c, "NYC"):
-		c = strings.Replace(c, "NYC", "New York City", -1)
+		c = "New York City"
 	case strings.Contains(c, "SF"):
-		c = strings.Replace(c, "SF", "San Francisco", -1)
+		c = "San Francisco"
 	}
 	s.campus = c
 }
