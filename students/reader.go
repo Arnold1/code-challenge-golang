@@ -23,15 +23,15 @@ func (r *Reader) Read() []*Student {
 
 	rows, _ := c.ReadAll()
 
-	students := make([]*Student, len(rows))
-	for i, row := range rows {
+	var students []*Student
+	for _, row := range rows {
 		switch r.Delimiter {
 		case ',':
-			students[i] = newCommaStudent(row)
+			students = append(students, newCommaStudent(row))
 		case '$':
-			students[i] = newDollarStudent(row)
+			students = append(students, newDollarStudent(row))
 		case '|':
-			students[i] = newPipeStudent(row)
+			students = append(students, newPipeStudent(row))
 		}
 	}
 	return students
