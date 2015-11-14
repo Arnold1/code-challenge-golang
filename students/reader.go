@@ -18,19 +18,18 @@ func NewReader(fileReader io.Reader, delimiter rune) *Reader {
 }
 
 func (r *Reader) Read() []*Student {
-	var students []*Student
-
 	c := csv.NewReader(r.FileReader)
 	c.Comma = r.Delimiter
 	rows, _ := c.ReadAll()
-	for _, row := range rows {
+	students := make([]*Student, len(rows))
+	for i, row := range rows {
 		switch r.Delimiter {
 		case ',':
-			students = append(students, newCommaStudent(row))
+			students[i] = newCommaStudent(row)
 		case '$':
-			students = append(students, newDollarStudent(row))
+			students[i] = newDollarStudent(row)
 		case '|':
-			students = append(students, newPipeStudent(row))
+			students[i] = newPipeStudent(row)
 		}
 	}
 	return students

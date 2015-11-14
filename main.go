@@ -10,15 +10,15 @@ func main() {
 	options := students.OptionGroup{
 		"output1": students.Option{
 			"file":      "data/comma.txt",
-			"delimiter": ",",
+			"delimiter": students.CommaDelimiter,
 		},
 		"output2": students.Option{
 			"file":      "data/dollar.txt",
-			"delimiter": "$",
+			"delimiter": students.DollarDelimiter,
 		},
 		"output3": students.Option{
 			"file":      "data/pipe.txt",
-			"delimiter": "|",
+			"delimiter": students.PipeDelimiter,
 		},
 	}
 	students.NewRunner(os.Stdout, options).Run()
