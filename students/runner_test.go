@@ -44,13 +44,19 @@ func TestRun(t *testing.T) {
 		"Barrows Anika Hong Kong 5/5/1965 Spring Green",
 		"",
 	}, "\n")
-	options := map[string]string{
-		"commaFile":       "../data/comma.txt",
-		"dollarFile":      "../data/dollar.txt",
-		"pipeFile":        "../data/pipe.txt",
-		"commaDelimiter":  ",",
-		"dollarDelimiter": "$",
-		"pipeDelimiter":   "|",
+	options := OptionGroup{
+		"output1": Option{
+			"file":      "../data/comma.txt",
+			"delimiter": ",",
+		},
+		"output2": Option{
+			"file":      "../data/dollar.txt",
+			"delimiter": "$",
+		},
+		"output3": Option{
+			"file":      "../data/pipe.txt",
+			"delimiter": "|",
+		},
 	}
 	NewRunner(&out, options).Run()
 	if out.String() != expected {

@@ -7,13 +7,19 @@ import (
 )
 
 func main() {
-	options := map[string]string{
-		"commaFile":       "data/comma.txt",
-		"dollarFile":      "data/dollar.txt",
-		"pipeFile":        "data/pipe.txt",
-		"commaDelimiter":  ",",
-		"dollarDelimiter": "$",
-		"pipeDelimiter":   "|",
+	options := students.OptionGroup{
+		"output1": students.Option{
+			"file":      "data/comma.txt",
+			"delimiter": ",",
+		},
+		"output2": students.Option{
+			"file":      "data/dollar.txt",
+			"delimiter": "$",
+		},
+		"output3": students.Option{
+			"file":      "data/pipe.txt",
+			"delimiter": "|",
+		},
 	}
 	students.NewRunner(os.Stdout, options).Run()
 }

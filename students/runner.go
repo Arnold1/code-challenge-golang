@@ -4,15 +4,19 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sync"
 	"unicode/utf8"
 )
 
+type Option map[string]string
+type OptionGroup map[string]Option
+
 type Runner struct {
 	out     io.Writer
-	options map[string]string
+	options OptionGroup
 }
 
-func NewRunner(out io.Writer, options map[string]string) *Runner {
+func NewRunner(out io.Writer, options OptionGroup) *Runner {
 	return &Runner{
 		out:     out,
 		options: options,
@@ -37,22 +41,20 @@ func (r *Runner) display(s []*Student) {
 
 func (r *Runner) allStudents() []*Student {
 	var all []*Student
+	var wg sync.WaitGroup
 
-	cf, _ := os.Open(r.options["commaFile"])
-	df, _ := os.Open(r.options["dollarFile"])
-	pf, _ := os.Open(r.options["pipeFile"])
-	defer cf.Close()
-	defer df.Close()
-	defer pf.Close()
-	//should delimiters be here?
-	cd, _ := utf8.DecodeRuneInString(r.options["commaDelimiter"])
-	dd, _ := utf8.DecodeRuneInString(r.options["dollarDelimiter"])
-	pd, _ := utf8.DecodeRuneInString(r.options["pipeDelimiter"])
-	cr := NewReader(cf, cd)
-	dr := NewReader(df, dd)
-	pr := NewReader(pf, pd)
-	all = append(all, cr.Read()...)
-	all = append(all, dr.Read()...)
-	all = append(all, pr.Read()...)
+	for _, o := range r.options {
+		wg.Add(1)
+		go func(file, delimiter string, wg *sync.WaitGroup) {
+			defer wg.Done()
+			f, _ := os.Open(file)
+			defer f.Close()
+			d, _ := utf8.DecodeRuneInString(delimiter)
+			r := NewReader(f, d)
+			all = append(all, r.Read()...)
+		}(o["file"], o["delimiter"], &wg)
+	}
+	wg.Wait()
+
 	return all
 }
