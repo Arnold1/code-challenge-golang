@@ -1,5 +1,4 @@
-Assembles a collection of student records by parsing data from 3 different files.
-Displays the collection 3 times, sorted 3 different ways.
+Assembles a collection of student records by parsing data from 3 different files. Displays the collection 3 times, sorted 3 different ways.
 
 Run:
     'go run main.go'
