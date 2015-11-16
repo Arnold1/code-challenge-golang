@@ -4,17 +4,15 @@ import (
 	"reflect"
 	"strings"
 	"testing"
-	"unicode/utf8"
 )
 
 func TestNewReader(t *testing.T) {
 	in := `"a","b","c","d","e","1/1/2015"`
 	delimiter := ","
 	r := NewReader(strings.NewReader(in), delimiter)
-	expected, _ := utf8.DecodeRuneInString(delimiter)
 
-	if r.delimiter != expected {
-		t.Error("Expected '%v', got '%v'", expected, r.delimiter)
+	if r.delimiter != delimiter {
+		t.Error("Expected '%v', got '%v'", delimiter, r.delimiter)
 	}
 }
 

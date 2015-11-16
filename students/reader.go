@@ -8,29 +8,28 @@ import (
 
 type Reader struct {
 	file      io.Reader
-	delimiter rune
+	delimiter string
 }
 
 func NewReader(file io.Reader, delimiter string) *Reader {
-	d, _ := utf8.DecodeRuneInString(delimiter)
 	return &Reader{
 		file:      file,
-		delimiter: d,
+		delimiter: delimiter,
 	}
 }
 
 func (r *Reader) Read() []*Student {
 	c := csv.NewReader(r.file)
-	c.Comma = r.delimiter
+	c.Comma, _ = utf8.DecodeRuneInString(r.delimiter)
 	rows, _ := c.ReadAll()
 	students := make([]*Student, len(rows))
 	for i, row := range rows {
 		switch r.delimiter {
-		case ',':
+		case ",":
 			students[i] = newCommaStudent(row)
-		case '$':
+		case "$":
 			students[i] = newDollarStudent(row)
-		case '|':
+		case "|":
 			students[i] = newPipeStudent(row)
 		}
 	}
