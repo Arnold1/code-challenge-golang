@@ -4,19 +4,18 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sync"
 	"unicode/utf8"
 )
 
 type Option map[string]string
-type OptionGroup map[string]Option
+type Options []Option
 
 type Runner struct {
 	out     io.Writer
-	options OptionGroup
+	options Options
 }
 
-func NewRunner(out io.Writer, options OptionGroup) *Runner {
+func NewRunner(out io.Writer, options Options) *Runner {
 	return &Runner{
 		out:     out,
 		options: options,
@@ -24,7 +23,7 @@ func NewRunner(out io.Writer, options OptionGroup) *Runner {
 }
 
 func (r *Runner) Run() {
-	r.display(r.allStudents())
+	r.display(r.students())
 }
 
 func (r *Runner) display(s []*Student) {
@@ -39,22 +38,15 @@ func (r *Runner) display(s []*Student) {
 	fmt.Fprintln(r.out, NewFormatter(p.ByLastNameDesc()).Format())
 }
 
-func (r *Runner) allStudents() []*Student {
-	var all []*Student
-	var wg sync.WaitGroup
+func (r *Runner) students() []*Student {
+	var s []*Student
 
 	for _, o := range r.options {
-		wg.Add(1)
-		go func(file, delimiter string, wg *sync.WaitGroup) {
-			defer wg.Done()
-			f, _ := os.Open(file)
-			defer f.Close()
-			d, _ := utf8.DecodeRuneInString(delimiter)
-			r := NewReader(f, d)
-			all = append(all, r.Read()...)
-		}(o["file"], o["delimiter"], &wg)
+		f, _ := os.Open(o["file"])
+		defer f.Close()
+		d, _ := utf8.DecodeRuneInString(o["delimiter"])
+		r := NewReader(f, d)
+		s = append(s, r.Read()...)
 	}
-	wg.Wait()
-
-	return all
+	return s
 }

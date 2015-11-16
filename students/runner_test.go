@@ -44,16 +44,16 @@ func TestRun(t *testing.T) {
 		"Barrows Anika Hong Kong 5/5/1965 Spring Green",
 		"",
 	}, "\n")
-	options := OptionGroup{
-		"output1": Option{
+	options := Options{
+		Option{
 			"file":      "../data/comma.txt",
 			"delimiter": ",",
 		},
-		"output2": Option{
+		Option{
 			"file":      "../data/dollar.txt",
 			"delimiter": "$",
 		},
-		"output3": Option{
+		Option{
 			"file":      "../data/pipe.txt",
 			"delimiter": "|",
 		},
