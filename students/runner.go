@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"unicode/utf8"
 )
 
 type Option map[string]string
@@ -44,8 +43,7 @@ func (r *Runner) students() []*Student {
 	for _, o := range r.options {
 		f, _ := os.Open(o["file"])
 		defer f.Close()
-		d, _ := utf8.DecodeRuneInString(o["delimiter"])
-		r := NewReader(f, d)
+		r := NewReader(f, o["delimiter"])
 		s = append(s, r.Read()...)
 	}
 	return s

@@ -11,8 +11,8 @@ func TestNewReader(t *testing.T) {
 	delimiter := ','
 	r := NewReader(strings.NewReader(in), delimiter)
 
-	if r.Delimiter != delimiter {
-		t.Error("Expected '%v', got '%v'", delimiter, r.Delimiter)
+	if r.delimiter != delimiter {
+		t.Error("Expected '%v', got '%v'", delimiter, r.delimiter)
 	}
 }
 

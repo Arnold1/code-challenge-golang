@@ -3,27 +3,29 @@ package students
 import (
 	"encoding/csv"
 	"io"
+	"unicode/utf8"
 )
 
 type Reader struct {
-	FileReader io.Reader
-	Delimiter  rune
+	file      io.Reader
+	delimiter rune
 }
 
-func NewReader(fileReader io.Reader, delimiter rune) *Reader {
+func NewReader(file io.Reader, delimiter string) *Reader {
+	d, _ := utf8.DecodeRuneInString(delimiter)
 	return &Reader{
-		FileReader: fileReader,
-		Delimiter:  delimiter,
+		file:      file,
+		delimiter: d,
 	}
 }
 
 func (r *Reader) Read() []*Student {
-	c := csv.NewReader(r.FileReader)
-	c.Comma = r.Delimiter
+	c := csv.NewReader(r.file)
+	c.Comma = r.delimiter
 	rows, _ := c.ReadAll()
 	students := make([]*Student, len(rows))
 	for i, row := range rows {
-		switch r.Delimiter {
+		switch r.delimiter {
 		case ',':
 			students[i] = newCommaStudent(row)
 		case '$':
