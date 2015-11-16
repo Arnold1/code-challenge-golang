@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/arnoldcano/code-challenge2/students"
+	"github.com/arnoldcano/code-challenge-golang/students"
 )
 
 func main() {
