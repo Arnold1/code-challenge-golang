@@ -7,6 +7,7 @@ import (
 )
 
 type Option map[string]string
+
 type Options []Option
 
 type Runner struct {
@@ -25,8 +26,8 @@ func (r *Runner) Run() {
 	r.display(r.students())
 }
 
-func (r *Runner) display(s []*Student) {
-	p := NewPresenter(s)
+func (r *Runner) display(students []*Student) {
+	p := NewPresenter(students)
 	fmt.Fprintln(r.out, "Output 1:")
 	fmt.Fprintln(r.out, NewFormatter(p.ByCampusAndLastNameAsc()).Format())
 	fmt.Fprintln(r.out)
@@ -38,13 +39,13 @@ func (r *Runner) display(s []*Student) {
 }
 
 func (r *Runner) students() []*Student {
-	var s []*Student
+	var students []*Student
 
 	for _, o := range r.options {
 		f, _ := os.Open(o["file"])
 		defer f.Close()
 		r := NewReader(f, o["delimiter"])
-		s = append(s, r.Read()...)
+		students = append(students, r.Read()...)
 	}
-	return s
+	return students
 }
